@@ -15,7 +15,6 @@ import com.example.demo.user.entity.User;
 import com.example.demo.user.entity.UserStatus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

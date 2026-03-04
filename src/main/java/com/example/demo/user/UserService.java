@@ -21,7 +21,6 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final GroupRepository groupRepository;
 
 
     @Transactional
