@@ -22,6 +22,7 @@ public class Group {
     private UUID id;
     private String name;
     private String description;
+    private short maxUsers = 25;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -32,4 +33,11 @@ public class Group {
             orphanRemoval = true)
     @JsonIgnore
     private List<User> users;
+
+
+    public void addUser(User user) {
+        users.add(user);
+        user.setGroup(this);
+    }
+
 }

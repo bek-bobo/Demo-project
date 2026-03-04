@@ -1,7 +1,9 @@
 package com.example.demo.group;
 
+import com.example.demo.group.vos.AddUserToGroupVO;
 import com.example.demo.group.vos.GroupCreateVO;
 import com.example.demo.group.vos.GroupResponseVO;
+import com.example.demo.group.vos.GroupWithUsersResponseVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,5 +26,13 @@ public class GroupController {
                 .status(HttpStatus.CREATED)
                 .body(groupService.createGroup(groupCreateVO));
     }
+
+    @PostMapping("/add-user")
+    public ResponseEntity<GroupWithUsersResponseVO> addUserToGroup(@Valid @RequestBody AddUserToGroupVO addUserToGroupVO) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(groupService.addUserToGroup(addUserToGroupVO));
+    }
+
 
 }
