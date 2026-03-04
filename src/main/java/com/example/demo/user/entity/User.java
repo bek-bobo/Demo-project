@@ -1,11 +1,9 @@
 package com.example.demo.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.demo.group.entity.Group;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -14,13 +12,25 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
+@Getter
+@Setter
 @Table(name = "`user`")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
     private String username;
     private String email;
     private String phoneNumber;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus userStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    private Group group;
+
 }

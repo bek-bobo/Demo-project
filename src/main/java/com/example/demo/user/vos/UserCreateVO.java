@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,4 +24,5 @@ public class UserCreateVO {
     @NotBlank()
     @Pattern(regexp = "^.{8,}$", message = "Password must be at least 8 characters long!!!")
     private String password;
+
 }

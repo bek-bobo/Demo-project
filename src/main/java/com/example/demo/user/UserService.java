@@ -2,7 +2,9 @@ package com.example.demo.user;
 
 
 import com.example.demo.customExeptionHandler.UserNotFoundException;
+import com.example.demo.group.GroupRepository;
 import com.example.demo.user.entity.User;
+import com.example.demo.user.entity.UserStatus;
 import com.example.demo.user.vos.UserCreateVO;
 import com.example.demo.user.vos.UserResponseVO;
 import com.example.demo.user.vos.UserUpdateVO;
@@ -19,15 +21,21 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final GroupRepository groupRepository;
 
 
     @Transactional
     public UserResponseVO create(UserCreateVO userCreateVO) {
+        User user = new User();
 
-        User user = modelMapper.map(userCreateVO, User.class);
-        user.setId(UUID.randomUUID());
-        User save = userRepository.save(user);
-        return modelMapper.map(save, UserResponseVO.class);
+        user.setUsername(userCreateVO.getUsername());
+        user.setPassword(userCreateVO.getPassword());
+        user.setEmail(userCreateVO.getEmail());
+        user.setPhoneNumber(userCreateVO.getPhoneNumber());
+        user.setUserStatus(UserStatus.WAITING);
+
+        User saved = userRepository.save(user);
+        return modelMapper.map(saved, UserResponseVO.class);
 
     }
 
@@ -54,22 +62,23 @@ public class UserService {
 
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
-        if (vo.getUsername() != null){
+        if (vo.getUsername() != null) {
             user.setUsername(vo.getUsername());
         }
-        if (vo.getPassword() != null){
+        if (vo.getPassword() != null) {
             user.setPassword(vo.getPassword());
         }
-        if (vo.getEmail() != null){
+        if (vo.getEmail() != null) {
             user.setEmail(vo.getEmail());
         }
-        if (vo.getPhoneNumber() != null){
+        if (vo.getPhoneNumber() != null) {
             user.setPhoneNumber(vo.getPhoneNumber());
         }
         User saved = userRepository.save(user);
         return modelMapper.map(saved, UserResponseVO.class);
 
     }
+
     @Transactional
     public void deleteUser(UUID id) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
