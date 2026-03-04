@@ -47,7 +47,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponseVO getUsers(UUID id) {
+    public UserResponseVO getUser(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,13 +41,23 @@ public class GroupController {
         return ResponseEntity.ok(groupService.getGroupWithUsers(id));
     }
 
+    @GetMapping("/all/users")
+    public ResponseEntity<List<GroupWithUsersResponseVO>> groupWithUsersResponseVO() {
+        return ResponseEntity.ok(groupService.getAllGroupWithUsers());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<GroupResponseVO>> getAllGroup() {
+        return ResponseEntity.ok(groupService.getAllGroup());
+    }
+
     @PatchMapping("/update/{id}")
-    public ResponseEntity<GroupResponseVO> updateGroup(@PathVariable UUID id, @RequestBody GroupUpdateVO updateVO){
-        return ResponseEntity.ok(groupService.updateGroup(id,updateVO));
+    public ResponseEntity<GroupResponseVO> updateGroup(@PathVariable UUID id, @RequestBody GroupUpdateVO updateVO) {
+        return ResponseEntity.ok(groupService.updateGroup(id, updateVO));
     }
 
     @DeleteMapping("/delete/user/")
-    public ResponseEntity<Void> deleteUser(@RequestBody DeleteUserFromGroup deleteUserFromGroup){
+    public ResponseEntity<Void> deleteUser(@RequestBody DeleteUserFromGroup deleteUserFromGroup) {
 
         groupService.removeUserFromGroup(deleteUserFromGroup);
 

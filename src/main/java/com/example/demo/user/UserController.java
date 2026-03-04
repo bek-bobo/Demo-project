@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseVO> getUser(@PathVariable UUID id) {
-        return ResponseEntity.ok(userService.getUsers(id));
+        return ResponseEntity.ok(userService.getUser(id));
     }
 
     @PatchMapping("/update/{id}")

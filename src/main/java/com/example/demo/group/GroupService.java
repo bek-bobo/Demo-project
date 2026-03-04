@@ -10,11 +10,13 @@ import com.example.demo.group.vos.*;
 import com.example.demo.user.UserRepository;
 import com.example.demo.user.entity.User;
 import com.example.demo.user.entity.UserStatus;
+import com.example.demo.user.vos.UserResponseVO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -98,6 +100,21 @@ public class GroupService {
         }
 
         group.setGroupStatus(GroupStatus.CANCELLED);
+    }
+
+    public List<GroupResponseVO> getAllGroup() {
+        return groupRepository.findAll()
+                .stream()
+                .map(group -> modelMapper.map(group, GroupResponseVO.class))
+                .toList();
+
+    }
+
+    public List<GroupWithUsersResponseVO> getAllGroupWithUsers() {
+        return groupRepository.findAll()
+                .stream()
+                .map(group -> modelMapper.map(group, GroupWithUsersResponseVO.class))
+                .toList();
     }
 
 
