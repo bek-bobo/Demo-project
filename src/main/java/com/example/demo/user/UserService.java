@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
 
-import com.example.demo.customExeptionHandler.UserNotFoundException;
+import com.example.demo.core.customExeptionHandler.UserNotFoundException;
 import com.example.demo.user.entity.User;
 import com.example.demo.user.entity.UserStatus;
 import com.example.demo.user.vos.UserCreateVO;
