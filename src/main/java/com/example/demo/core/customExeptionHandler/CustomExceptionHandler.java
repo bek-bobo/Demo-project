@@ -51,7 +51,7 @@ public class CustomExceptionHandler {
     })
     public ResponseEntity<ErrorResponse> handleBusinessRule(BusinessRuleException ex) {
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ErrorResponse(
                         HttpStatus.CONFLICT.value(),
                         ex.getMessage(),
