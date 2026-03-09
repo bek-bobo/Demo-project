@@ -63,8 +63,8 @@ public class GroupService extends CoreService<UUID, Group, GroupResponseVO, Grou
     protected GroupResponseVO internalUpdate(UUID uuid, GroupUpdateVO updateVO) {
         Group entity = getGroupOrThrow(uuid);
 
-        groupMapper.fromUpdateToEntity(updateVO, entity);
-        Group saved = groupRepository.save(entity);
+        Group group = groupMapper.fromUpdateToEntity(updateVO, entity);
+        Group saved = groupRepository.save(group);
 
         return groupMapper.convertToResponseVO(saved);
     }
