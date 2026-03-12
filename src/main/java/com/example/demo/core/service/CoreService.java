@@ -2,6 +2,7 @@ package com.example.demo.core.service;
 
 
 import com.example.demo.core.coreModelMapper.CoreMapper;
+import com.example.demo.core.customExeptionHandler.BusinessRuleException;
 import com.example.demo.core.repository.CoreRepository;
 import com.example.demo.rsql.SpecificationBuilder;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,9 +51,7 @@ public abstract class CoreService<ID, ENTITY, RESPONSE_VO, CREATE_VO, UPDATE_VO>
                 (getRepository()
                         .findById(id)
                         .orElseThrow(
-                                () -> new EntityNotFoundException(("%s with %s Not found "
-                                        .formatted(getEntityClass()
-                                                .getSimpleName(), id)))));
+                                () -> notFoundException(id)));
 
 
     }
@@ -66,13 +65,13 @@ public abstract class CoreService<ID, ENTITY, RESPONSE_VO, CREATE_VO, UPDATE_VO>
     @Transactional
     public void delete(ID id) {
         ENTITY entity = getRepository().findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException
-                                ("%s with %s Not found "
-                                        .formatted(getEntityClass().getSimpleName(), id)));
+                .orElseThrow(() -> notFoundException(id));
 
         getRepository().delete(entity);
     }
+
+
+    protected abstract RuntimeException notFoundException(ID id);
 
 
 }

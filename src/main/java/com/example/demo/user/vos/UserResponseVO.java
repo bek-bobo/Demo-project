@@ -1,5 +1,6 @@
 package com.example.demo.user.vos;
 
+import com.example.demo.user.entity.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,6 @@ public class UserResponseVO {
     private String username;
     private String email;
     private String phoneNumber;
-    private String password;
-
+    private UserStatus status;
 
 }

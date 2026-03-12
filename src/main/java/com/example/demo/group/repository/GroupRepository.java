@@ -1,4 +1,4 @@
-package com.example.demo.group;
+package com.example.demo.group.repository;
 
 import com.example.demo.core.repository.CoreRepository;
 import com.example.demo.group.entity.Group;

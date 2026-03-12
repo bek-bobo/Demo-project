@@ -1,4 +1,4 @@
-package com.example.demo.user.user.mapper;
+package com.example.demo.user.mapper;
 
 import com.example.demo.core.coreModelMapper.CoreMapper;
 import com.example.demo.user.entity.User;
