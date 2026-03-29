@@ -7,7 +7,8 @@ import com.example.demo.core.repository.CoreRepository;
 import com.example.demo.core.service.CoreService;
 import com.example.demo.user.entity.User;
 import com.example.demo.user.entity.UserStatus;
-import com.example.demo.user.user.mapper.UserMapper;
+import com.example.demo.user.mapper.UserMapper;
+import com.example.demo.user.repository.UserRepository;
 import com.example.demo.user.vos.UserCreateVO;
 import com.example.demo.user.vos.UserResponseVO;
 import com.example.demo.user.vos.UserUpdateVO;
@@ -43,7 +44,7 @@ public class UserService extends CoreService<UUID, User, UserResponseVO, UserCre
         user.setUserStatus(UserStatus.WAITING);
 
         User saved = userRepository.save(user);
-        return userMapper.convertToResponseVO(user);
+        return userMapper.convertToResponseVO(saved);
     }
 
     @Override
@@ -55,10 +56,15 @@ public class UserService extends CoreService<UUID, User, UserResponseVO, UserCre
         return userMapper.convertToResponseVO(updatedUser);
     }
 
+    @Override
+    protected RuntimeException notFoundException(UUID uuid) {
+        return new UserNotFoundException(uuid);
+    }
+
 
     private User getUserOrThrow(UUID userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .orElseThrow(() -> notFoundException(userId));
     }
 
 }

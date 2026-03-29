@@ -9,10 +9,11 @@ import com.example.demo.core.repository.CoreRepository;
 import com.example.demo.core.service.CoreService;
 import com.example.demo.group.entity.Group;
 import com.example.demo.group.entity.GroupStatus;
-import com.example.demo.group.group.mapper.GroupMapper;
+import com.example.demo.group.mapper.GroupMapper;
+import com.example.demo.group.repository.GroupRepository;
 import com.example.demo.group.vos.*;
 import com.example.demo.rsql.SpecificationBuilder;
-import com.example.demo.user.UserRepository;
+import com.example.demo.user.repository.UserRepository;
 import com.example.demo.user.entity.User;
 import com.example.demo.user.entity.UserStatus;
 import lombok.RequiredArgsConstructor;
@@ -69,6 +70,11 @@ public class GroupService extends CoreService<UUID, Group, GroupResponseVO, Grou
         return groupMapper.convertToResponseVO(saved);
     }
 
+    @Override
+    protected RuntimeException notFoundException(UUID uuid) {
+        return new GroupNotFoundException(uuid);
+    }
+
     @Transactional
     public GroupWithUsersResponseVO addUserToGroup(AddUserToGroupVO addUserToGroupVO) {
 
@@ -95,7 +101,7 @@ public class GroupService extends CoreService<UUID, Group, GroupResponseVO, Grou
         User user = getUserOrThrow(deleteUserFromGroup.getUserId());
 
         if (!group.getUsers().contains(user)) {
-            throw new BusinessRuleException("User with this %s is not in this group %s".formatted(user.getId(), group.getId()));
+            throw new BusinessRuleException("User with this %s is not in this Group %s".formatted(user.getId(), group.getId()));
         }
 
         group.removeUser(user);
@@ -130,10 +136,9 @@ public class GroupService extends CoreService<UUID, Group, GroupResponseVO, Grou
         return pages.map(groupMapper::toGroupWithUsersResponseVO);
     }
 
-
     private Group getGroupOrThrow(UUID groupId) {
         return groupRepository.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException(groupId));
+                .orElseThrow(() -> notFoundException(groupId));
     }
 
     private User getUserOrThrow(UUID userId) {

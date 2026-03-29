@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.user.repository;
 
 
 import com.example.demo.core.repository.CoreRepository;
